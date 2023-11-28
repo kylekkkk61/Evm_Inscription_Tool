@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVM Inscription Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div id="author-info">
+            <p>作者推特 <a href="https://twitter.com/kylekkkkwu61" target="_blank">@kylekkkwu61</a></p>
+            <img src="author_image.png">
+        </div>
+        <p>使用注意事項：</p>
+        <ol>
+            <li>僅限EVM兼容鏈使用，BSC暫無法使用</li>
+            <li>RPC地址可至 <a href="https://chainlist.org/" target="_blank">https://chainlist.org/</a> 找尋</li>
+            <li>任何使用問題可推特私訊詢問</li>
+        </ol>
+    </div>
+    <div id="app-container">
+        <h1>EVM Inscription Tool</h1>
+
+        <label for="rpc-input">RPC地址：</label>
+        <input type="text" id="rpc-input" class="custom-input" />
+
+        <label for="private-key-input">私鑰（一行一個帳號）：</label>
+        <textarea id="private-key-input" class="custom-input" rows="5"></textarea>
+
+        <label for="nums-input">交易數量：</label>
+        <input type="text" id="nums-input" class="custom-input" />
+
+        <label for="data-input">交易銘文內容：</label>
+        <input type="text" id="data-input" class="custom-input" />
+
+        <h2>執行結果：</h2>
+        <textarea id="result-text" rows="10" readonly></textarea>
+
+        <button id="execute-button">執行交易</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
