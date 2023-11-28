@@ -1,8 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Set up Web3 provider
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545"); // You can replace this with your RPC endpoint
+    const executeButton = document.getElementById("execute-button");
+    executeButton.addEventListener("click", function () {
+        // Disable the button and update appearance
+        executeButton.disabled = true;
+        executeButton.innerText = "交易進行中";
+        executeButton.style.backgroundColor = "#ccc"; // Set your desired color
 
-    document.getElementById("execute-button").addEventListener("click", function () {
         scheduleTransaction();
     });
 });
@@ -32,19 +35,28 @@ async function scheduleTransaction() {
             await executeTransaction(cleanedPrivateKey, rpc, nums, data);
         }
     }
+
+    // Enable the button and reset appearance after all transactions are completed
+    const executeButton = document.getElementById("execute-button");
+    executeButton.disabled = false;
+    executeButton.innerText = "執行交易";
+    executeButton.style.backgroundColor = ""; // Reset to default or set your desired color
+
+    // Add a message indicating all transactions are completed
+    printResult("----全部交易已執行完成----");
 }
+
 async function executeTransaction(privateKey, rpc, nums, data) {
     const w3 = new Web3(new Web3.providers.HttpProvider(rpc));
     const fromAddress = w3.eth.accounts.privateKeyToAccount(privateKey).address;
 
-    // Check if the node is listening
-    const isNodeListening = await w3.eth.net.isListening();
-    if (!isNodeListening) {
-        printResult("網路連接失敗 請重新開啟腳本/更換rpc節點");
-        return;
-    }
 
     try {
+        const isNodeListening = await w3.eth.net.isListening();
+        if (!isNodeListening) {
+            printResult("網路連接失敗 請重新開啟腳本/更換rpc節點");
+            return;
+        }
         printResult(`網路連接成功 開始發送交易 (帳號：${fromAddress})`);
 
         // Ensure that obtaining the nonce is done synchronously
@@ -68,14 +80,10 @@ async function executeTransaction(privateKey, rpc, nums, data) {
             transactions.push(transaction);
         }
 
-        const signedTransactions = await Promise.all(
-            transactions.map(async (transaction) => {
-                return await w3.eth.accounts.signTransaction(transaction, privateKey);
-            })
-        );
-
         const receipts = await Promise.all(
-            signedTransactions.map(async (signedTransaction) => {
+            transactions.map(async (transaction) => {
+                const signedTransaction = await w3.eth.accounts.signTransaction(transaction, privateKey);
+
                 return await new Promise((resolve, reject) => {
                     w3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
                         .on('receipt', receipt => resolve(receipt))
