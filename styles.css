@@ -7,7 +7,6 @@ body {
 }
 
 
-
 #app-container {
     max-width: 600px;
     margin: 50px auto;
@@ -58,32 +57,23 @@ button:hover {
 /* 側欄 */
 #sidebar {
     float: right;
-    /* 將區域浮動至右方 */
     max-width: 300px;
-    /* 右側區域最大寬度 */
     padding: 20px;
     background-color: #1E1E26;
     border-radius: 10px;
     margin-right: 30px;
-    /* 調整 margin-right 的值，使側欄向左移動 */
 }
 
 #author-info {
     text-align: center;
-    /* 讓文字和圖片置中 */
     display: flex;
-    /* 新增這一行，將內容排列在同一行 */
     align-items: center;
-    /* 垂直置中 */
 }
 
 #author-info img {
     width: 70px;
-    /* 設定圖片寬度 */
     border-radius: 50%;
-    /* 讓圖片呈現圓形 */
     margin-top: 10px;
-    /* 增加上方的間距 */
     margin-left: 30px;
 }
 
@@ -100,10 +90,15 @@ button:hover {
 
 #sidebar a {
     color: #9F7AEA;
-    /* 超連結的顏色 */
 }
 
 #sidebar a:hover {
     color: #7C4BCC;
-    /* 滑鼠懸停時的顏色 */
+}
+
+
+
+#icon {
+    border-radius: 50%;
+    overflow: hidden;
 }
