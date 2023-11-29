@@ -6,6 +6,8 @@ body {
     color: white;
 }
 
+
+
 #app-container {
     max-width: 600px;
     margin: 50px auto;
@@ -24,6 +26,7 @@ body {
     background-color: #2E2E38;
     color: #FFFFFF;
 }
+
 
 #result-text {
     width: calc(100% - 16px);
