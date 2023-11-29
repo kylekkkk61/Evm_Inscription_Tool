@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     const executeButton = document.getElementById("execute-button");
-    const pauseInput = document.getElementById("pause-input"); // 新增的秒數輸入框
+    const pauseInput = document.getElementById("pause-input");
 
     executeButton.addEventListener("click", function () {
         // Disable the button and update appearance
         executeButton.disabled = true;
         executeButton.innerText = "交易進行中";
-        executeButton.style.backgroundColor = "#ccc"; // Set your desired color
+        executeButton.style.backgroundColor = "#ccc";
 
         scheduleTransaction(pauseInput.value); // 傳遞秒數給 scheduleTransaction
     });
@@ -40,8 +40,7 @@ async function scheduleTransaction(pauseSeconds) {
 
         const privateKey = privateKeys[i].trim();
         if (privateKey !== "") {
-            await executeTransaction(privateKey, rpc, nums, data);
-            await pauseForSeconds(pauseSeconds); // 在每筆交易之後暫停指定秒數
+            await executeTransaction(privateKey, rpc, nums, data, pauseSeconds); // 將 pauseSeconds 傳遞給 executeTransaction
         }
     }
 
@@ -49,12 +48,12 @@ async function scheduleTransaction(pauseSeconds) {
     const executeButton = document.getElementById("execute-button");
     executeButton.disabled = false;
     executeButton.innerText = "執行交易";
-    executeButton.style.backgroundColor = ""; // Reset to default or set your desired color
+    executeButton.style.backgroundColor = "";
 
-    // Add a message indicating all transactions are completed
     printResult("----全部交易已執行完成----");
 }
-async function executeTransaction(privateKey, rpc, nums, data) {
+
+async function executeTransaction(privateKey, rpc, nums, data, pauseSeconds) {
     const w3 = new Web3(new Web3.providers.HttpProvider(rpc));
     const fromAddress = w3.eth.accounts.privateKeyToAccount(privateKey).address;
 
@@ -65,9 +64,7 @@ async function executeTransaction(privateKey, rpc, nums, data) {
             return;
         }
 
-        // Ensure that obtaining the nonce is done synchronously
         const nonce = await w3.eth.getTransactionCount(fromAddress);
-
 
         for (let i = 0; i < nums; i++) {
             const gasPrice = await w3.eth.getGasPrice();
@@ -102,17 +99,13 @@ async function executeTransaction(privateKey, rpc, nums, data) {
                 printResult(`交易失敗，nonce: ${transaction.nonce}, Error: ${error.message}`);
             }
 
-            // Pause for a moment before the next transaction
-            await pauseForSeconds(1); // Adjust the pause duration as needed
+            await pauseForSeconds(pauseSeconds);
         }
-
     } catch (error) {
         console.error("Error checking node connection:", error);
         printResult("網路連接失敗 請重新開啟腳本/更換rpc節點");
     }
 }
-
-
 
 function printResult(message) {
     const resultText = document.getElementById("result-text");
