@@ -11,18 +11,41 @@
 </head>
 
 <body>
+    <div id="rpclist">
+        <!-- Chain id -->
+        <div id="a-section">
+            <div class="a-block" id="a1">A1</div>
+            <div class="a-block" id="a2">A2</div>
+            <div class="a-block" id="a3">A3</div>
+            <div class="a-block" id="a4">A4</div>
+            <div class="a-block" id="a5">A5</div>
+            <div class="a-block" id="a6">A6</div>
+        </div>
+
+        <!-- rpc list -->
+        <div id="b-section">
+            <div class="b-block" id="b1">B1</div>
+            <div class="b-block" id="b2">B2</div>
+            <div class="b-block" id="b3">B3</div>
+        </div>
+    </div>
+
+
+
     <div id="sidebar">
         <div id="author-info">
             <p>作者推特 <a href="https://twitter.com/kylekkkkwu61" target="_blank">@kylekkkwu61</a></p>
             <img src="author_image.png">
         </div>
-        <p>使用注意事項：</p>
+        <p>☂︎ 使用注意事項：</p>
         <ol>
-            <li>EVM兼容鏈皆可使用</li>
-            <li>RPC地址可至 <a href="https://chainlist.org/" target="_blank">https://chainlist.org/</a> 找尋</li>
-            <li>任何使用問題可推特私訊詢問</li>
+            <li><a href="https://github.com/kylekkkk61/Evm_Inscription_Tool" target="_blank"> Github開源代碼</a></li>
+            <li>私人RPC建議至 <a href="https://alchemy.com/" target="_blank">Alchemy</a> 申請</li>
+            <li>☕️: 0xCeD043CAd09b46486fFF56132572305748E032Ab</li>
         </ol>
     </div>
+
+
     <div id="app-container">
         <h1>EVM Inscription Tool</h1>
 
@@ -32,14 +55,39 @@
         <label for="private-key-input">私鑰（一行一個帳號）：</label>
         <textarea id="private-key-input" class="custom-input" rows="5"></textarea>
 
+        <label for="recipient-input">欲發送地址：</label>
+        <input type="text" id="recipient-input" class="custom-input" />
+        <div id="mode-buttons">
+            <button id="self-mode-button" class="mode-button" onclick="setTransactionMode('self')">自轉</button>
+            <button id="other-mode-button" class="mode-button" onclick="setTransactionMode('other')">其他</button>
+        </div>
+
+
         <label for="nums-input">交易數量：</label>
         <input type="number" id="nums-input" class="custom-input" style="width: calc(55% - 160px);" required>
 
         <label for="pause-input" style="margin-left: 12px">暫停秒數：</label>
-        <input type="number" id="pause-input" class="custom-input" value="0.5" step="0.1"
-            style="width: calc(55% - 160px);" required>
-
+        <input type="number" id="pause-input" class="custom-input" value="1" step="0.5"
+            style="width: calc(55% - 121.5px);" required>
         <br>
+
+
+        <div id="fee-and-gas-section">
+            <!-- Gas fee -->
+            <div id="gas-section">
+                <button id="gas-toggle" class="toggle-button" onclick="toggleGas()">Gas:</button>
+                <input type="text" id="custom-gas" class="custom-input" value="預設Gas (110% 市場速度)"
+                    style="width: calc(55% - 160px);" readonly>
+            </div>
+
+            <!-- Priority gas fee -->
+            <div id="fee-section">
+                <button id="fee-toggle" class="toggle-button" onclick="toggleFee()">礦工小費:</button>
+                <input type="text" id="custom-fee" class="custom-input" value="No Pririty Fee"
+                    style="width: calc(55% - 160px);" readonly>
+            </div>
+        </div>
+
 
         <label for="data-input">交易銘文內容：</label>
         <input type="text" id="data-input" class="custom-input" />
@@ -48,6 +96,7 @@
         <textarea id="result-text" rows="8" readonly></textarea>
 
         <button id="execute-button">執行交易</button>
+        <button id="cancel-button" disabled>終止交易</button>
     </div>
 
     <script src="script.js"></script>
