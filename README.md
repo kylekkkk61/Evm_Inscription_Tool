@@ -1,5 +1,8 @@
 # Evm_Inscription_Tool
 
+## 轉載聲明
+歡迎轉載/自行優化網頁發布，請務必標註原作者推特[kylekkkk.eth](https://twitter.com/kylekkkkwu61)及本Github連結，違者後果自負
+
 ## 關於
 
 實現鏈上多帳號自動化發送交易的工具
